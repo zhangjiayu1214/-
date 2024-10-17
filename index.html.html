@@ -5,6 +5,7 @@
 <title>五羊传说选择题</title>
 <script>
 function checkAnswer(questionName, correctAnswer, nextQuestionId) {
+  console.log("Checking answer for question: " + questionName); // 添加调试信息
   var radios = document.getElementsByName(questionName);
   var resultDiv = document.getElementById('result-' + questionName);
   var isAnswered = false;
@@ -14,15 +15,19 @@ function checkAnswer(questionName, correctAnswer, nextQuestionId) {
       if (radios[i].value === correctAnswer) {
         resultDiv.innerHTML = '选择正确！';
         resultDiv.style.color = 'green';
-        // 显示下一题
+        // 显示下一题或完成信息
         if (nextQuestionId) {
           var nextQuestion = document.getElementById(nextQuestionId);
           if (nextQuestion) {
             nextQuestion.style.display = 'block';
           }
+        } else if (questionName === 'question5') {
+          console.log("Answer for question 5 is correct. Showing completion message."); // 添加调试信息
+          // 如果是第五题并且选择正确，显示完成信息
+          document.getElementById('completion-message').style.display = 'block';
         }
       } else {
-        resultDiv.innerHTML = '选择错误！';
+        resultDiv.innerHTML = '选择错误,请重新作答！';
         resultDiv.style.color = 'red';
       }
       break;
@@ -87,3 +92,8 @@ function checkAnswer(questionName, correctAnswer, nextQuestionId) {
   <button type="button" onclick="checkAnswer('question5', 'C', null)">提交答案</button>
   <p id="result-question5"></p>
 </div>
+<div id="completion-message" style="display: none; color: green;">
+  <p>恭喜你，通过了所有问题考核</p>
+</div>
+</body>
+</html>
